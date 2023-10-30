@@ -1,0 +1,91 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, nopagenumbers]{adamblan-hw}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+% Some frequently helpful commands. Feel free to add more of your own.
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+
+\newcommand{\limit}{\lim\limits}
+\newcommand{\limn}{\limit_{n \to \infty}}
+
+% usage \set{1, 2, 3} for {1, 2, 3}. Will automatically resize the braces too.
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+% usage \abs{\frac{1}{2}} for |1/2|. Will automatically resize the bars too.
+\newcommand{\abs}[1]{\left| #1 \right|}
+% same as \abs but with double bars like for vector magnitude
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+% usage \ceil{\frac{1}{2}} for \lceil 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+% usage \floor{\frac{1}{2}} for \lfloor 1/2 \rfloor. Will automatically resize the bars too.
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+% usage \round{\frac{1}{2}} for \lfloor 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\round}[1]{\left\lfloor #1 \right\rceil}
+% The following commands are defined via the xparse package, which you can look up for more info if you want.
+
+% \par(\frac{1}{2}) will automatically resize the parenthesis
+\NewDocumentCommand{\paren}{r()}{\ensuremath{\left( #1 \right)}}
+% \brac[\frac{1}{2}] will automatically resize the brackets
+\NewDocumentCommand{\brac}{r[]}{\ensuremath{\left[ #1 \right]}}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% DO NOT INCLUDE YOUR NAME ANYWHERE IN THE PDF. WE WANT %%
+%% TO GRADE ANONYMOUSLY TO AVOID BIAS!!!!                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{lstlisting}
+  # Message Size Part A
+  import math
+
+  e = 3
+
+  encrypted_message = 109599938775622399587345269212768768
+
+  message_int = round(math.pow(encrypted_message, 1 / e))
+  message =  bytes([x for x in message_int.to_bytes(1000, byteorder='little') if x != 0])
+
+  print(message)
+  # message = b'hello'
+\end{lstlisting}
+
+\end{document}
+

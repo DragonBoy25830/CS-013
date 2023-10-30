@@ -1,0 +1,48 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, nopagenumbers]{adamblan-hw}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% DO NOT INCLUDE YOUR NAME ANYWHERE IN THE PDF. WE WANT %%
+%% TO GRADE ANONYMOUSLY TO AVOID BIAS!!!!                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+    \begin{question}{\color{red} Strong Induction (slide invariant)}
+    \textbf{Prove that every $\mathbf{n\geq2}$ can be expressed as a product of itself.}
+
+    Let $P(n)$ be "$n=p_0 p_1 p_2 \cdots p_j$ where $p_0, p_1, p_2, \cdots, p_j$ are prime."
+    We go by strong induction on $n$
+
+    \underline{Base Case ($n=2$)}: $2=2$ and $2$ is a prime number. Thus, since it can be written as a product 
+    of itself, which is prime, $P(2)$ is true. 
+
+    \underline{Inductive Hypothesis:} Suppose that $P(l)$ is true for all
+    $2 \leq l < k$ where $k \geq 2$.
+
+    \underline{Inductive Step:} We go by cases:
+    \begin{itemize}
+        \item $k$ is prime: If $k$ is prime, then there is no number smaller than $k$
+        divides it. Thus, $k$ can be written as a product of itself which is prime and
+        $P(k)$ holds if $k$ is prime. 
+        \item $k$ is composite: If $k$ is composite, then it can be written as 
+        $k = m \cdot n$ where $1 < m, n < k$. Since $m < k$ and $n < k$, then
+        $$k = m \cdot n$$
+        $$k = (p_0^m p_1^m p_2^m \cdots p_i^m)\cdot(p_0^n p_1^n p_2^n \cdots p_j^n) \ \text{(by Inductive Hypothesis)}$$
+
+        A product of products is still a product, so $k$ can be written as a product of
+        primes, thus $P(k)$ is true even when $k$ is composite
+    \end{itemize}
+    Since $P(k)$ is true for both cases of $k$ being prime or composite,
+    we have proved the statement for all $n \geq 2$ by induction.
+    \qed
+    \end{question}
+
+\end{document}

@@ -1,0 +1,92 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, nopagenumbers]{adamblan-hw}
+
+% Some frequently helpful commands. Feel free to add more of your own.
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+
+\newcommand{\limit}{\lim\limits}
+\newcommand{\limn}{\limit_{n \to \infty}}
+
+% usage \set{1, 2, 3} for {1, 2, 3}. Will automatically resize the braces too.
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+% usage \abs{\frac{1}{2}} for |1/2|. Will automatically resize the bars too.
+\newcommand{\abs}[1]{\left| #1 \right|}
+% same as \abs but with double bars like for vector magnitude
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+% usage \ceil{\frac{1}{2}} for \lceil 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+% usage \floor{\frac{1}{2}} for \lfloor 1/2 \rfloor. Will automatically resize the bars too.
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+% usage \round{\frac{1}{2}} for \lfloor 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\round}[1]{\left\lfloor #1 \right\rceil}
+% The following commands are defined via the xparse package, which you can look up for more info if you want.
+\newcommand*{\T}[1]{\texttt{#1}}
+
+% \par(\frac{1}{2}) will automatically resize the parenthesis
+\NewDocumentCommand{\paren}{r()}{\ensuremath{\left( #1 \right)}}
+% \brac[\frac{1}{2}] will automatically resize the brackets
+\NewDocumentCommand{\brac}{r[]}{\ensuremath{\left[ #1 \right]}}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% DO NOT INCLUDE YOUR NAME ANYWHERE IN THE PDF. WE WANT %%
+%% TO GRADE ANONYMOUSLY TO AVOID BIAS!!!!                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{question}{Functions on Trees}
+\textbf{For all T $\in$ \texttt{Tree}, \texttt{size(T)} $\leq 2^{\texttt{height(T)}} - 1$}
+
+\underline{Lemma:} $2^a + 2^b \leq 2 * 2^{max(a, b)}$
+\begin{proof}
+We prove this lemma by cases:
+
+\underline{$a = b$:}
+\vspace{-0.90cm}
+\begin{align*}
+2^a + 2^b &\stackrel{?}{\leq} 2 * 2^{max(a, b)} \\
+2^a + 2^a &\stackrel{?}{\leq} 2 * 2^{max(a, a)} && \text{[this is true because of our assumption of $a = b$]}\\
+2 * 2^a &\stackrel{?}{\leq} 2 * 2^{a} \\
+1 &\leq 1 \\
+\end{align*}
+\vspace{-0.90cm}
+\underline{$a < b$:}
+\begin{align*}
+2^a + 2^b &\stackrel{?}{\leq} 2 * 2^{max(a, b)} \\
+2^a + 2^b &\stackrel{?}{\leq} 2 * 2^{b} \\
+2^{a - b} + 1 &\stackrel{?}{\leq} 2 \\
+\frac{2^a}{2^b} &\stackrel{?}{\leq} 1 \\
+2^a &\leq 2^b && \text{[this is true because of our assumption of $a < b$]}\\
+\end{align*}
+A similar argument is made for $a > b$, thus our lemma is true.
+\end{proof}
+We now prove the original statement by structural induction. Let P(\T{T}) be the original claim.
+
+\underline{Base Case:} \T{T = Nil}: \T{size(Nil)} $=0 \leq 0 = 2^0 - 1 = 2^{\T{height(T)}} - 1$
+
+\underline{Inductive Hypothesis:} For some \texttt{L, R} $\in$ \T{T}, suppose P(\T{L}) and P(\T{R})
+
+\underline{Induction Step:} We want to show P(\T{T}) where \T{T} = \T{Tree($x$, L, R)}.
+\begin{align*}
+\T{size(T)} &= \T{1 + size(L) + size(R)} && \text{[definition of \T{size(T)}]} \\
+&\leq 1 + (2^{\T{height(L)}} - 1) + (2^{\T{height(R)}} - 1) && \text{[by I.H.]} \\
+&= 2^{\T{height(L)}} + 2^{\T{height(R)}} - 1 \\
+&\leq 2 * 2^{max(\T{height(L)}, \T{height(R)})} - 1 && \text{[by the lemma]}\\
+&= 2^{1 + max(\T{height(L)}, \T{height(R)})} - 1 \\
+&= 2^{\T{height(T)}} - 1 && \text{[definition of \T{height(T)}]} \\
+\T{size(T)} &\leq 2^{\T{height(T)}} - 1 \\
+\end{align*}
+Thus we have proven the original claim by structual induction. \qed
+\end{question}
+
+\end{document}

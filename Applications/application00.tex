@@ -1,0 +1,232 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, nopagenumbers]{adamblan-hw}
+
+\usepackage{amsmath}
+
+% Some frequently helpful commands. Feel free to add more of your own.
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+
+\newcommand{\limit}{\lim\limits}
+\newcommand{\limn}{\limit_{n \to \infty}}
+
+% usage \set{1, 2, 3} for {1, 2, 3}. Will automatically resize the braces too.
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+% usage \abs{\frac{1}{2}} for |1/2|. Will automatically resize the bars too.
+\newcommand{\abs}[1]{\left| #1 \right|}
+% same as \abs but with double bars like for vector magnitude
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+% usage \ceil{\frac{1}{2}} for \lceil 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+% usage \floor{\frac{1}{2}} for \lfloor 1/2 \rfloor. Will automatically resize the bars too.
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+% usage \round{\frac{1}{2}} for \lfloor 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\round}[1]{\left\lfloor #1 \right\rceil}
+% The following commands are defined via the xparse package, which you can look up for more info if you want.
+
+% \par(\frac{1}{2}) will automatically resize the parenthesis
+\NewDocumentCommand{\paren}{r()}{\ensuremath{\left( #1 \right)}}
+% \brac[\frac{1}{2}] will automatically resize the brackets
+\NewDocumentCommand{\brac}{r[]}{\ensuremath{\left[ #1 \right]}}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% DO NOT INCLUDE YOUR NAME ANYWHERE IN THE PDF. WE WANT %%
+%% TO GRADE ANONYMOUSLY TO AVOID BIAS!!!!                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{question}{\color{red} Message Size}
+
+\begin{part}
+Code submission in separate file. The message is ``b`hello'".
+\end{part}
+
+\begin{part}
+The encrypted message is $m^e$, and since $m$ is small, we can say that $m^e < N$ which means that
+$m^e \mod N = m^e$. Since $m^e$ is not affected by the $\mod N$ operation, the encryption step of the RSA
+just returns $m^e$. We can just take the $e$-th root of this to get $m$ back. If $m$ were large, then $m^e \mod N$ 
+(the encryption step of RSA) would return something not equal to $m^e$, so this attack wouldn't work if $m$ is large.
+\end{part}
+\end{question}
+
+\begin{question}{\color{red} Wiener's Attack}
+\begin{part}
+To prove that our definition of a and b satisifies the pre-conditions of Legendre's Theorem, we will prove several separate results and put them together at the end.
+
+We first prove that $gcd(k, d) = 1$. To prove this, we note that $gcd(k, d) | k$ and $gcd(k, d) | d$, so $gcd(k, d)$ divides any linear combination of $k$ and $d$ i.e.
+for any $m, n \in \NN$, $gcd(k, d) | mk + nd$. By the definition of RSA, $ed \equiv_{\phi(N)} 1$.
+So, there is a $k \in \ZZ$ such that $ed - k\phi(N) = 1$. By letting $m = e$ and $n = -\phi(N)$, we see that $mk + nd = 1$ for any choice of $m, n$ since the choice of $e, p,$ and $q$ 
+is arbitrary during RSA. As such, we can now say that $gcd(k, d)|mk + nd = gcd(k, d) | 1$, and the only number that divides $1$ is $1$, $gcd(k, d) = 1$.
+
+
+We next show the following two inequalities separately after making a few statements about $d$:
+\begin{itemize}
+    \item $d \neq 0$: This is true because of the RSA condition that $ed \equiv_{\phi(N)} 1$
+    \item $d > 0$: Due to the RSA condition that  $ed \equiv_{\phi(N)} 1$, $d$ is the multplicative inverse of $e$ and therefore must be non-negative.
+\end{itemize}
+\begin{align*}
+(p-2)(q-2) &> 2 && \text{[trivial based off given assumption that $p, q > 11$]} \\
+pq - 2q - 2p + 4 &> 2 \\
+2pq - 2q - 2p + 2 &> pq \\
+2(p - 1)(q-1) &> pq \\
+2\phi(N) &> N && \text{[by definition of $N$ and $\phi(N)$]} \\
+\frac{2}{dN} &> \frac{1}{d\phi(N)} && \text{[$d \neq 0$]}\\
+\end{align*}
+\vspace{-1.5cm}
+\begin{align*}
+\frac{N^{\frac{1}{4}}}{3} &> d&& \text{[given]} \\
+N^{\frac{1}{4}} &> 3d \\
+N &> 81d^4 > 4d\\
+N &> 4d  && \text{[transititivity of inequality for real numbers]}\\
+N &> \frac{2 * 2d^2}{d} && \text{[$d > 0$]}\\
+\frac{1}{2d^2} &> \frac{2}{dN} \\
+\end{align*}
+We now know that $\frac{1}{d\phi(N)} < \frac{2}{dN}$ and $\frac{2}{dN} < \frac{1}{2d^2}$. By the transititivity 
+of inequality for real numbers, we can say that $$\frac{1}{d\phi(N)} < \frac{2}{dN} < \frac{1}{2d^2}$$,
+\end{part}
+
+We have proven that our definition of a and b satisfies the pre-conditions of Legendre's theorem.
+
+\begin{part} \textbf{Lemma 1}: $\abs{N - \phi(N)} < 3\sqrt{N}$
+
+\begin{proof}
+Lemma 1a: $N - \phi(N) > 0$
+
+Because $p, q > 11$, we can say the following:
+\begin{align*}
+p + q - 1 > 11 + 11 - 1 > 0 && \text{[given that $p, q > 11$]} \\
+pq - pq + p + q- 1 > 0 \\
+pq - (p - 1)(q - 1) > 0 \\
+N - \phi(N) > 0 && \text{[definition of $N$ and $\phi(N)$]}\\
+\end{align*}
+Thus Lemma 1a is true.
+\end{proof}
+We break up our given of $q < p < 2q$ into $q < p$ and $p < 2q$ to prove the lemma.
+\begin{align*}
+q &< p && \text{[given]}\\
+\sqrt{q} &< \sqrt{p} \\
+q &< \sqrt{pq} \\
+q &< \sqrt{N} && \text{[definition of N]} \\
+3q &< 3\sqrt{N} \\
+q + p < q + 2q &< 3\sqrt{N} && \text{[given that $p < 2q$]}\\
+q + p - 1< q + p &< 3\sqrt{N} && \text{[transititivity of inequality for real numbers]} \\
+q + p - 1 &< 3\sqrt{N} && \text{[transititivity of inequality for real numbers]} \\
+pq - (pq - q - p + 1) &< 3\sqrt{N} \\
+N - \phi(N) &< 3\sqrt{N} \\
+\abs{N - \phi(N)} &< 3\sqrt{N} && \text{[$N - \phi(N) > 0$ by Lemma 1a, so definition of absolute value applies]}
+\end{align*}
+Therefore we have proven \textbf{Lemma 1}.
+\end{part}
+\pagebreak
+\begin{part} \textbf{Lemma 2}:
+To prove this lemma, we will employ \textbf{Lemma 1}.
+
+\begin{align*} 
+\abs{\frac{e}{N} - \frac{k}{d}} &= \abs{\frac{ed - kN}{Nd}} \\
+&= \abs{\frac{ed - k\phi(N) - kN + k\phi(N)}{Nd}} \\
+&= \abs{\frac{1 - k(N - \phi(N))}{Nd}} && \text{[by RSA condition that $ed \equiv_{\phi(N)} 1$]} \\
+&< \abs{\frac{-k(N - \phi(N))}{Nd}} && \text{[$N - \phi(N) > 0$ from part b]} \\
+&< \abs{\frac{-3k\sqrt{N}}{Nd}} && \text{[by \textbf{Lemma 1}]} \\
+&< \abs{\frac{3k\sqrt{N}}{Nd}} && \text{[by definition of absolute value]} \\
+&\leq \frac{3k}{d\sqrt{N}} \\
+\end{align*}
+
+The last statement of the simplification can be made because $d > 0$ from previous part, $k > 0$ by RSA property $ed \equiv_{\phi(N)} 1$, and $N > 0$ because $p, q > 0$.
+Thus we have proven \textbf{Lemma 2}.
+\end{part}
+\pagebreak
+
+\begin{part} \textbf{Lemma 3}: $k < d$
+
+    We prove this lemma by simplifying the RSA condition that $ed \equiv_{\phi(N)} 1$
+
+\begin{align*}
+ed &\equiv_{\phi(N)} 1 && \text{[condition of RSA]} \\
+ed - k\phi(N) &= 1 && \text{[true for some $k \in \ZZ$ by definition $\equiv_n$]} \\
+1 + k\phi(N) &= ed \\
+k\phi(N) &< ed \\
+k &< \frac{ed}{\phi(N)} < \frac{\phi(N)d}{\phi(N)} && \text{[by definition of RSA]}\\
+k < d
+\end{align*}
+Thus we have proven \textbf{Lemma 3}.
+\end{part}
+\pagebreak
+\begin{part} Prove that $\abs{\frac{e}{N} - \frac{k}{d}} < \frac{1}{2d^2}$
+
+\begin{proof}
+Lemma 1b: $\frac{3}{\sqrt{N}} < \frac{1}{2d^2}$ \\
+
+\begin{align*}
+d &< \frac{N^{\frac{1}{4}}}{3} && \text{[given]} \\
+36d ^ 4 < 81d^4 &< N \\
+36d^4 &< N && \text{[transititivity of inequality for real numbers]} \\
+6d^2 &< \sqrt{N} \\
+3 * 2d^2 &< \sqrt{N} \\
+\frac{3}{\sqrt{N}} &< \frac{1}{2d^2} \\
+\end{align*}
+Thus we have proven Lemma 1b.
+\end{proof}
+We prove the original statement by employing \textbf{Lemma 2} and \textbf{Lemma 3}
+\begin{align*}
+\abs{\frac{e}{N} - \frac{k}{d}} &< \frac{3k}{d\sqrt{N}} && \text{[by \textbf{Lemma 2}]}\\
+&< \frac{3d}{d\sqrt{N}} && \text{[by \textbf{Lemma 3}]} \\
+&= \frac{3}{\sqrt{N}} \\
+&< \frac{1}{2d^2} && \text{[by Lemma 1b]} \\
+\abs{\frac{e}{N} - \frac{k}{d}} &< \frac{1}{2d^2}
+\end{align*}
+Thus we have proven the original statement.
+\end{part}
+
+\pagebreak
+
+\begin{part}
+Code submission in separate file on gradescope.
+
+
+\begin{itemize}
+\item K1:
+
+p = 379 \\
+q = 239
+
+\item K2:
+
+p = 12539632253212038182708715136208112909218665186857529270323913\\
+088513184321026862369475927295147730917565158010747988824664394379\\
+978058105305597625967410787791833343134652857846415473379462098625\\
+607282443627270451810395851889315754218497337824973147392684628707\\
+5853455404337166913999471528088686741224927681479
+
+q = 10587227430092432880125156352261513126400243087944617662585663\\
+424891839528786738244810280030700986980497528913151784044482659300\\
+631076999793841968447713923394022439331363453795770533810149066452\\
+483629748724308847150705362397635237900434592520917498639864991794\\
+0373025573924513596301382883113062330937472494359
+\item K3:
+
+p = 10918952865582252098239079408125578647426266894934560842726219\\
+321572189303435138882708623974202002066512594943477860617098674539\\
+922342187561553047536730442226147711610748684672421097690778657965\\
+915142725249457595134788101121498884165931345086318046756669290432\\
+8406206973866541393288421998658788581626435823973
+
+q = 80704108225986846689088894623631942822394012965679790134822960\\
+353763696287745286610889769161432843183717207275489607631907676707\\
+871854593075515955028452067841551869699075640269983212231116408775\\
+149090038537951432904031727827115531279717750167834084430363357711\\
+827940641648984434771854501457989011540376590839
+
+\end{itemize}
+\end{part}
+\end{question}
+\end{document}

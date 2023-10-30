@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, nopagenumbers]{adamblan-hw}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% DO NOT INCLUDE YOUR NAME ANYWHERE IN THE PDF. WE WANT %%
+%% TO GRADE ANONYMOUSLY TO AVOID BIAS!!!!                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+    \begin{question}{\color{red} Adjacent Integers}
+        \textbf{Prove that for all integers $n$, $n(n + 1)$ is even.} \\
+        
+        We proceed by cases:
+        \begin{itemize}
+            \item \underline{$n$ is even}: If $n$ is even, then by definition, there exists a
+            $k \in \mathbb{Z}$ such that $n = 2k$. We can now perform the following calculations.
+            \begin{align*}
+            n(n + 1) = &2k(2k + 1) && \text{[definition of even]}\\
+            n(n + 1) = &2 * k(2k + 1) \\
+            n(n + 1) = &2(2k^2 + k) \\
+            2 | n(n + &1) && \text{[definition of | ]}\\
+            \end{align*}
+            By the definition of a factor, $2$ is a factor of $n(n + 1)$ making $n(n + 1)$ even if $n$ is even.
+        
+            \item \underline{$n$ is odd}: If $n$ is even, then by definition, there exists a
+            $k \in \mathbb{Z}$ such that $n = 2k + 1$. We can now perform the following calculations.
+            \begin{align*}
+                n(n + 1) = &(2k + 1)(2k + 2) && \text{[definition of odd]}\\
+                n(n + 1) = &2 * (k + 1)(2k + 1) \\
+                2 | n(n+&1) && \text{[definition of | ]}\\
+                \end{align*}
+            By the definition of a factor, $2$ is a factor of $n(n + 1)$ making $n(n + 1)$ even if $n$ is odd.
+        \end{itemize}
+        Thus, we have shown that $n(n + 1)$ is even when $n$ is odd or even, so
+        $n(n + 1)$ is even for all integers $n$.
+    \end{question}
+
+    \begin{question}{\color{red} Odd Squares}
+        \textbf{Prove that if $k$ is an odd integer, $8 | k^2 - 1$.}
+        
+        By the definition of an odd number, there exists a $l \in \mathbb{Z}$ such that
+        $k = 2l + 1$. We can now perform the following calculations:
+        \begin{align*}
+        k^2 - 1 &= (2l + 1)^2 - 1&& \text{[definition of odd]} \\
+        k^2 - 1 &= 4l^2 + 4l + 1 - 1\\
+        k^2 - 1 &= 4l^2 + 4l \\
+        k^2 - 1 &= 4 * l(l + 1) && \text{[$l(l + 1)$ is even by our proof in the previous problem]}\\
+        k^2 - 1 &= 4 * 2q && \text{[by definition of even numbers, there exists a $q \in \mathbb{Z}$ s.t. $l(l + 1) = 2q$]} \\
+        k^2 - 1 &= 8q \\
+        8 | k^2 - &1 && \text{[definition of | ]}
+        \end{align*}
+        By the definition of a factor, $8$ is a factor of $k^2 - 1$ given that $k$ is an odd integer, so we
+        have proven the claim.
+    \end{question}
+\end{document}

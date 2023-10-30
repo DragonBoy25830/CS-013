@@ -1,0 +1,74 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, nopagenumbers]{adamblan-hw}
+
+% Some frequently helpful commands. Feel free to add more of your own.
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+
+\newcommand{\limit}{\lim\limits}
+\newcommand{\limn}{\limit_{n \to \infty}}
+
+% usage \set{1, 2, 3} for {1, 2, 3}. Will automatically resize the braces too.
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+% usage \abs{\frac{1}{2}} for |1/2|. Will automatically resize the bars too.
+\newcommand{\abs}[1]{\left| #1 \right|}
+% same as \abs but with double bars like for vector magnitude
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+% usage \ceil{\frac{1}{2}} for \lceil 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+% usage \floor{\frac{1}{2}} for \lfloor 1/2 \rfloor. Will automatically resize the bars too.
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+% usage \round{\frac{1}{2}} for \lfloor 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\round}[1]{\left\lfloor #1 \right\rceil}
+% The following commands are defined via the xparse package, which you can look up for more info if you want.
+
+% \par(\frac{1}{2}) will automatically resize the parenthesis
+\NewDocumentCommand{\paren}{r()}{\ensuremath{\left( #1 \right)}}
+% \brac[\frac{1}{2}] will automatically resize the brackets
+\NewDocumentCommand{\brac}{r[]}{\ensuremath{\left[ #1 \right]}}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% DO NOT INCLUDE YOUR NAME ANYWHERE IN THE PDF. WE WANT %%
+%% TO GRADE ANONYMOUSLY TO AVOID BIAS!!!!                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{question}{Inclusion-Exclusion}
+How many ways are there to pick three numbers from three sets A, B, C such that:
+\begin{itemize}
+    \item A = $\{1, 2, 3, \dots, n\}$ 
+    \item B = $\{1, 2, 3, \dots, m\}$
+    \item C = $\{1, 2, 3, \dots, l\}$
+    \item At least one of the numbers is a one
+\end{itemize}
+We use the inclusion Exclusion principle and calculate this by first looking at 
+the total number of ways there are to pick three numbers from the three sets and
+then subtracting from that the number of ways to pick three numbers from the three 
+sets where none of them is a one.
+
+To find the total number of ways to pick three numbers from the three sets without any restriction, we note
+that there are $n$, $m$, and $l$ ways to pick from $A, B, C$ respectively. By the rule of product, 
+we can say that there are $n * m * l$ ways to pick three numbers from the three sets without any restriction.
+
+To calculate the total number of ways to pick three numbers from three sets where none of the numbers are $1$, 
+we note that we're essentially excluding $1$ from each set. As such, there are $n - 1, m - 1$, and $l - 1$ ways
+to pick from $A, B, C$ respectively. By the rule of product, we can say that there are $(n - 1)(m - 1)(l - 1)$ ways
+to pick three numbers from the three sets where none of the numbers are $1$.
+
+Now, to find the number of ways three numbers from the three sets where at least one of them is a one,
+we subtract the numbers of ways there are to pick no ones from the total number of ways to pick three numbers.
+As such, the total number of ways to pick three numbers from the three sets where at least one of them is a one
+is \framebox{\text{$nml - (n - 1)(m - 1)(l - 1)$}}.
+\end{question}
+
+\end{document}
