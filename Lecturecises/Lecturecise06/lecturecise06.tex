@@ -1,0 +1,84 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, nopagenumbers]{adamblan-hw}
+
+% Some frequently helpful commands. Feel free to add more of your own.
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+
+\newcommand{\limit}{\lim\limits}
+\newcommand{\limn}{\limit_{n \to \infty}}
+
+% usage \set{1, 2, 3} for {1, 2, 3}. Will automatically resize the braces too.
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+% usage \abs{\frac{1}{2}} for |1/2|. Will automatically resize the bars too.
+\newcommand{\abs}[1]{\left| #1 \right|}
+% same as \abs but with double bars like for vector magnitude
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+% usage \ceil{\frac{1}{2}} for \lceil 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+% usage \floor{\frac{1}{2}} for \lfloor 1/2 \rfloor. Will automatically resize the bars too.
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+% usage \round{\frac{1}{2}} for \lfloor 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\round}[1]{\left\lfloor #1 \right\rceil}
+% The following commands are defined via the xparse package, which you can look up for more info if you want.
+
+% \par(\frac{1}{2}) will automatically resize the parenthesis
+\NewDocumentCommand{\paren}{r()}{\ensuremath{\left( #1 \right)}}
+% \brac[\frac{1}{2}] will automatically resize the brackets
+\NewDocumentCommand{\brac}{r[]}{\ensuremath{\left[ #1 \right]}}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% DO NOT INCLUDE YOUR NAME ANYWHERE IN THE PDF. WE WANT %%
+%% TO GRADE ANONYMOUSLY TO AVOID BIAS!!!!                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{question}{High Five!}
+We solve this problem by applying the lineary of expectations. We let the random variable $R$ be the number of students
+who get two high fives from the same TA. We express $R$ as a sum of indicator variables. Let
+$R_i$ be an indiccator for the event that the $i$-th student gets two high fives from the same TA i.e.
+$R_i = 0$ is the event the $i$-th student doesn't get two high fives from the same TA and $R_i = 1$ be the
+event the $i$-th student does get two high fives from the same TA. The number of students who get two high fives from 
+the same TA can be expressed as $$R = R_1 + R_2 + \dots + R_n$$
+
+The indicator values are independent from one another, but when applying the linearity of expectations, we don't need to consider whether the events are independent or not.
+We can also apply the linearity of expecations because $R_1, R_2, \dots, R_n$ is a sequence of $n$ arbitrary random variables.
+
+We can now take the expected value of both sides of the equation:
+\begin{align*}
+R &= R_1 + R_2 + \dots + R_n \\
+E[R] &= E[R_1 + R_2 + \dots + R_n] \\
+E[R] &= E[R_1] + E[R_2] + \dots + E[R_n] && \text{[linearity of expectation]} \\
+\end{align*}
+
+We can calculate $E[R_i]$ as follows. There are two outcomes that are possible here. The student either 
+gets two high fives from the same TA or doesn't. The former outcome only occurs when both dice roll the same number,
+and there is a $1/8$ probability that both dice roll the same number. This is derived with a simple counting argument.
+There are 64 total outcomes of rolling two 8-sided diced, and only 8 of those outcomes have both of those dice being the same.
+Similarly, there is a $7/8$ probability that the dice rolls are different.
+\begin{align*}
+E[R_i] = 0 * \frac{7}{8} + 1 * \frac{1}{8} && \text{[definition of expected value and indicator variable]} \\
+E[R_i] = \frac{1}{8} \\
+\end{align*}
+
+We can now go back to our original equation:
+\begin{align*}
+E[R] &= E[R_1] + E[R_2] + \dots + E[R_n] && \text{[linearity of expectation]} \\
+E[R] &= \frac{1}{8} + \frac{1}{8} + \dots + \frac{1}{8} && \text{by calculation above}\\
+E[R] &= \frac{n}{8} && \text{[there are $n$ students]}\\
+\end{align*}
+
+Thus, through the lineary of expectations, we can see that the expected number of students who will receive two high fives from the same TA is \fbox{$\frac{n}{8}$}
+\end{question}
+
+\end{document}

@@ -1,0 +1,81 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, nopagenumbers]{adamblan-hw}
+
+\usepackage{xcolor}
+
+% Some frequently helpful commands. Feel free to add more of your own.
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+
+\newcommand{\limit}{\lim\limits}
+\newcommand{\limn}{\limit_{n \to \infty}}
+
+% usage \set{1, 2, 3} for {1, 2, 3}. Will automatically resize the braces too.
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+% usage \abs{\frac{1}{2}} for |1/2|. Will automatically resize the bars too.
+\newcommand{\abs}[1]{\left| #1 \right|}
+% same as \abs but with double bars like for vector magnitude
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+% usage \ceil{\frac{1}{2}} for \lceil 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+% usage \floor{\frac{1}{2}} for \lfloor 1/2 \rfloor. Will automatically resize the bars too.
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+% usage \round{\frac{1}{2}} for \lfloor 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\round}[1]{\left\lfloor #1 \right\rceil}
+% The following commands are defined via the xparse package, which you can look up for more info if you want.
+
+% \par(\frac{1}{2}) will automatically resize the parenthesis
+\NewDocumentCommand{\paren}{r()}{\ensuremath{\left( #1 \right)}}
+% \brac[\frac{1}{2}] will automatically resize the brackets
+\NewDocumentCommand{\brac}{r[]}{\ensuremath{\left[ #1 \right]}}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% DO NOT INCLUDE YOUR NAME ANYWHERE IN THE PDF. WE WANT %%
+%% TO GRADE ANONYMOUSLY TO AVOID BIAS!!!!                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{question}{Rolling Dice}
+For both parts, we use the definition that two events $A$ and $B$ are independent if and only if
+\\Pr($A | B$) $=$ Pr($A$) and Pr($B | A$) $=$ Pr($B$). 
+\begin{part} By the construction of \texttt{\textcolor{magenta}{RollDie}(6)}, we can say that 
+Pr($D_1) = $Pr($D_2) = \frac{1}{6}$. By the law of product, Pr($D_1 \cap D_2) = \frac{1}{6} * \frac{1}{6} = \frac{1}{36}$.
+We now perform the following calculations.
+
+\begin{align*}
+\text{Pr}(D_1 | D_2) &= \frac{\text{Pr}(D_1 \cap D_2)}{\text{Pr}(D_2)} && \text{[definition of Pr($A | B$)]}\\
+&=\frac{1/36}{1/6} \\
+&= \frac{1}{6} \\
+&= \text{Pr}(D_2) \\
+\end{align*}
+
+Using the commutativity $\cap$, a similar calculation is performed to show that \text{Pr}($D_2 | D_1$) = Pr($D_1$). Therefore, by the definition of independence, \fbox{$D_1$ and $D_2$ are independent.}
+\end{part} 
+
+% Independence of D_1 and S_5
+\begin{part} There are 36 possible outcomes for \texttt{die1 + die2} (by law of product), and only 4 of those outcomes
+result in $5$, i.e. $|S_5| = |\{(1, 4), (2, 3), (3, 2), (4, 1)\}| = 4$, so Pr($S_5) = \frac{4}{36} = \frac{1}{9}$. By looking at
+all the possibilities of $S_5$, we see that there is only one outcome where \texttt{die1} $= 1$, so Pr($D_1 \cap S_5) = \frac{1}{36}$.
+
+\begin{align*}
+\text{Pr}(D_1 | S_5) &= \frac{\text{Pr}(D_1 \cap S_5)}{\text{Pr}(S_5)} && \text{[definition of Pr($A | B$)]}\\
+&=\frac{1/36}{1/9} \\
+&= \frac{1}{4} \\
+&\neq \text{Pr}(S_5) \\
+\end{align*}
+
+Since Pr($D_1 |S_5) \neq $ Pr($S_5)$, by the definition of independence, \\\fbox{$D_1$ and $S_5$ are not independent and therefore dependent.}
+\end{part}
+\end{question}
+
+\end{document}

@@ -1,0 +1,268 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt, nopagenumbers]{adamblan-hw}
+
+% Some frequently helpful commands. Feel free to add more of your own.
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+
+\newcommand{\limit}{\lim\limits}
+\newcommand{\limn}{\limit_{n \to \infty}}
+
+% usage \set{1, 2, 3} for {1, 2, 3}. Will automatically resize the braces too.
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+% usage \abs{\frac{1}{2}} for |1/2|. Will automatically resize the bars too.
+\newcommand{\abs}[1]{\left| #1 \right|}
+% same as \abs but with double bars like for vector magnitude
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+% usage \ceil{\frac{1}{2}} for \lceil 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+% usage \floor{\frac{1}{2}} for \lfloor 1/2 \rfloor. Will automatically resize the bars too.
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+% usage \round{\frac{1}{2}} for \lfloor 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\round}[1]{\left\lfloor #1 \right\rceil}
+% The following commands are defined via the xparse package, which you can look up for more info if you want.
+
+% \par(\frac{1}{2}) will automatically resize the parenthesis
+\NewDocumentCommand{\paren}{r()}{\ensuremath{\left( #1 \right)}}
+% \brac[\frac{1}{2}] will automatically resize the brackets
+\NewDocumentCommand{\brac}{r[]}{\ensuremath{\left[ #1 \right]}}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% DO NOT INCLUDE YOUR NAME ANYWHERE IN THE PDF. WE WANT %%
+%% TO GRADE ANONYMOUSLY TO AVOID BIAS!!!!                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+% Some helpful commands for referring to the relevant functions and types. You're not obligated to use them, but it will help you match your formatting to ours and make your proof look nicer.
+
+\newcommand{\fconcat}{\textsf{concat}}
+\newcommand{\frev}{\textsf{rev}}
+\newcommand{\emptylist}{\texttt{[]}}
+\newcommand{\T}[1]{\texttt{#1}}
+
+\newcommand{\TreeType}{\textbf{\textsf{Tree}}}
+\newcommand{\Nil}{\texttt{Nil}}
+\newcommand{\Tree}{\texttt{Tree}}
+\newcommand{\List}{\texttt{List}}
+\newcommand{\finsert}{\textsf{insert}}
+\newcommand{\fless}{\textsf{less}}
+\newcommand{\fgreater}{\textsf{greater}}
+\newcommand{\fisBST}{\textsf{isBST}}
+% The \textsf{} command gives you sans serif text
+% The \texttt{} command gives you monospace text
+% The ~ key character as a space in math mode
+% The \quad command serves as a large space in math mode
+
+
+\begin{document}
+\begin{question}{\color{red} Lists without Lisp!}
+\begin{part}
+\textbf{Prove that concat is symmetric across \emptylist. That is, prove that \fconcat(L, \emptylist) = \fconcat(\emptylist, L)}
+
+We proceed by the structual induction. Let \T{P(L)} be the statement that \fconcat(L, \emptylist) = \fconcat(\emptylist, L)
+
+\underline{Base Case:} \T{L} = \emptylist: 
+\begin{align*}
+\fconcat(L, \emptylist) &= \fconcat(\emptylist, \emptylist) \\
+&= \emptylist && \text{[definition of \fconcat]} \\
+&= \fconcat(\emptylist, \emptylist) && \text{[definition of \fconcat]}\\
+\fconcat(L, \emptylist) &= \fconcat(\emptylist, L) \\
+\end{align*}
+
+\underline{Induction Hypothesis:} For some \T{L1} $\in$ \List, suppose \T{P(L1)} is true.
+
+\underline{Induction Step:} We want to show \T{P(L)} is true for \T{L = $x$::L1} for all $x \in \RR$.
+\begin{align*}
+\fconcat(\T{L}, \emptylist) &= \fconcat(\T{$x$}::\T{L1}, \emptylist) \\
+&= \T{$x$}::\fconcat(\T{L1}, \emptylist) && \text{[by definition of \fconcat]} \\
+&= \T{$x$}::\fconcat(\emptylist, \T{L1}) && \text{[by I.H.]} \\
+&= \T{$x$}::\T{L1} && \text{[by definition of \fconcat]} \\
+&= \fconcat(\emptylist, \T{$x$::L1}) && \text{[by definition of \fconcat]} \\
+&= \fconcat(\emptylist, \T{L})
+\end{align*}
+Thus, by structual induction, we have proven our original claim that $\fconcat$  is symmetric across \emptylist. \qed
+\end{part}
+
+\pagebreak
+\begin{part} \textbf{Prove that for all lists \T{A}, \T{B}, \T{C}, \fconcat is associative. That is:
+    \\\fconcat(\fconcat(\T{A}, \T{B}), \T{C}) = \fconcat(\T{A}, \fconcat(\T{B}, \T{C}))}
+
+We proceed by the structual induction. Let \T{P(A)} be the statement that \fconcat(\fconcat(\T{A}, \T{B}),\T{C}) = \fconcat(\T{A}, \fconcat(\T{B}, \T{C})).
+Let \T{B} and \T{C} be arbitrary lists. We induct on \T{A}.
+
+\underline{Base Case:} \T{A} = \emptylist
+\begin{align*}
+\fconcat(\fconcat(\T{A}, \T{B}),\T{C}) &= \fconcat(\fconcat(\emptylist, \T{B}),\T{C}) \\
+&= \fconcat(\T{B}, \T{C}) && \text{[definition of \fconcat]} \\
+&= \fconcat(\emptylist, \fconcat(\T{B}, \T{C})) && \text{[definition of \fconcat]}\\
+\fconcat(\fconcat(\T{A}, \T{B}),\T{C}) &= \fconcat(\T{A}, \fconcat(\T{B}, \T{C})) \\
+\end{align*}
+\underline{Induction Hypothesis:} For some \T{A1} $\in$ \List, let \T{P(A1)} be true.
+
+\underline{Induction Step:} We want to show \T{P(A)} where \T{A = x::A1} for all $x \in \RR$.
+\begin{align*}
+\fconcat(\fconcat(\T{A}, \T{B}),\T{C}) &=  \fconcat(\fconcat(\T{x::A1}, \T{B}),\T{C})\\
+&= \fconcat(\T{x::}\fconcat(\T{A1}, \T{B}), \T{C}) && \text{[by definition of \fconcat]} \\
+&= \T{x}::\fconcat(\fconcat(\T{A1}, \T{B}), \T{C}) && \text{[by definition of \fconcat]} \\
+&= \T{x}::\fconcat(\T{A1}, \fconcat(\T{B}, \T{C})) && \text{[by I.H.]}\\
+&= \fconcat(\T{x::}\T{A1}, \fconcat(\T{B}, \T{C})) && \text{[by definition of \fconcat]} \\
+&= \fconcat(\T{A}, \fconcat(\T{B}, \T{C})) \\
+\end{align*}
+Thus, by structual induction, we have proven our original claim that $\fconcat$ is commutative. \qed
+\end{part}
+
+\pagebreak
+\begin{part} \textbf{Prove that \frev(\fconcat(\T{A}, \T{B})) = \fconcat(\frev(\T{B}), \frev(\T{A})) for all lists \T{A} and \T{B}.}
+
+\begin{itemize}
+\item Lemma 1 (proved in part a): \fconcat(L, \emptylist) = \fconcat(\emptylist, L)
+\item Lemma 2 (proved in part b): \fconcat(\fconcat(\T{A}, \T{B}),\T{C}) = \fconcat(\T{A}, \fconcat(\T{B}, \T{C})) \\
+\end{itemize}
+We proceed by the structual induction. Let \T{P(A)} be the statement that \\ \frev(\fconcat(\T{A}, \T{B})) = \fconcat(\frev(\T{B}), \frev(\T{A})).
+Let \T{B} be an arbitrary list. We induct on \T{A}.
+
+\underline{Base Case:} \T{A} = \emptylist
+\begin{align*}
+\frev(\fconcat(\T{A}, \T{B})) &= \frev(\fconcat(\emptylist, \T{B})) \\
+&= \frev(\T{B}) && \text{[definition of \fconcat]}\\
+&= \fconcat(\emptylist, \frev(\T{B})) && \text{[definition of \fconcat]} \\
+&= \fconcat(\frev({\T{B}}), \emptylist) && \text{[by Lemma 1]} \\
+&= \fconcat(\frev({\T{B}}), \frev(\emptylist)) && \text{[definition of \frev]} \\
+\frev(\fconcat(\T{A}, \T{B})) &= \fconcat(\frev({\T{B}}), \frev(\T{A})) \\
+\end{align*}
+\underline{Induction Hypothesis:} For some \T{A1} $\in$ \List, let \T{P(A1)} be true.
+
+\underline{Induction Step:} We want to show \T{P(A)} where \T{A = x::A1} for all $x \in \RR$,
+\begin{align*}
+\frev(\fconcat(\T{A}, \T{B})) &= \frev(\fconcat(\T{x::A1}, \T{B})) \\
+&= \frev(\T{x::}\fconcat(\T{A1}, \T{B})) && \text{[definition of \fconcat]}\\
+&= \fconcat(\frev(\fconcat(\T{A1}, \T{B})), \T{x::\emptylist}) && \text{[definition of \frev]} \\
+&= \fconcat(\fconcat(\frev(\T{B}), \frev(\T{A1})), \T{x::\emptylist}) && \text{[by I.H.]} \\
+&= \fconcat(\frev({\T{B}}), \fconcat(\frev(\T{A1}), \T{x::\emptylist})) && \text{[by Lemma 2]} \\
+&= \fconcat(\frev(\T{B}), \frev(\T{x::A1})) \\
+\frev(\fconcat(\T{A}, \T{B})) &= \fconcat(\frev({\T{B}}), \frev(\T{A})) \\
+\end{align*}
+Thus, by structual induction, we have proven our original claim that \\ \frev(\fconcat(\T{A}, \T{B})) = \fconcat(\frev(\T{B}), \frev(\T{A})). \qed
+\end{part}
+\end{question}
+
+\begin{question}{\color{red} Proving BST Insertion Works!}
+\begin{part} \textbf{Prove that for all $b \in \ZZ, v \in \ZZ$ and all trees \T{T}, if \fless($b$, \T{T}), and $b > v$, then \\\fless($b$, \finsert($v$, \T{T}))}
+
+Let \T{P(T)} be the statement that for all $b \in \ZZ, v \in \ZZ$, if \fless(b, \T{T}) and $b > v$, then
+\fless(b, \finsert(v, \T{T})) i.e. for all $b \in \ZZ, v \in \ZZ$, $\fless(b, \T{T}) \land b > v \Rightarrow \fless(b, \finsert(v, \T{T}))$.
+
+We prove P(\T{T}) for all \T{T} $\in$ \T{Trees} by structural induction on \T{T}. 
+
+\underline{Base Case:} \T{T} = \Nil
+\begin{align*}
+\fless(b, \T{T}) \land b > v  &= \fless(b, \Nil) \land b > v\\
+&= \T{true} \land b > v && \text{[definition of \fless]} \\
+&\Rightarrow \T{true} \land \T{true} \land b > v \\
+&= \fless(v, \Nil) \land \fless(v, \Nil) \land b > v && \text{[definition of \fless]} \\
+&= \fless(b, \T{Tree}(v, \Nil, \Nil)) && \text{[definition of \fless]} \\
+&= \fless(b, \finsert(v, \Nil)) && \text{[definition of \finsert]} \\
+&= \fless(b, \finsert(v, \T{T}))
+\end{align*}
+Therefore, $\fless(b, \T{T}) \land b > v \Rightarrow \fless(b, \finsert(v, \T{T}))$ for \T{T} = $\Nil$ and our base case holds.
+
+\underline{Induction Hypothesis:} For some \T{L, R} $\in$ \T{Trees}, suppose \T{P(L)} and \T{P(R)} are true.
+
+\underline{Induction Step:} We want to show \T{P(T)} is true for \T{T = Tree($x$, L, R)} for all $x \in \ZZ$. We start by looking at two cases: $v < x$ and $v \geq x$.
+
+\underline{Case: $v < x$}  
+\begin{align*}
+\fless(b, \T{T}) \land b > v &= \fless(b, \T{Tree($x$, L, R)}) \land b > v\\
+&= x < b \land \fless(b, \T{L}) \land \fless(b, \T{R}) \land b > v && \text{[definition of \fless]} \\
+&\Rightarrow x < b \land \fless(b, \finsert(v, \T{L})) \land \fless(b, \T{R}) && \text{[by \T{P(L)} in I.H.]} \\
+&= \fless(b, \T{Tree($x$, \finsert($v$, \T{L}), R)}) && \text{[definition of \fless]}
+\end{align*}
+
+\underline{Case: $v \geq x$}  
+\begin{align*}
+\fless(b, \T{T}) \land b > v &= \fless(b, \T{Tree($x$, L, R)}) \land b > v\\
+&= x < b \land \fless(b, \T{L}) \land \fless(b, \T{R}) \land b > v && \text{[definition of \fless]} \\
+&\Rightarrow x < b \land \fless(b, \T{L}) \land \fless(b, \finsert(v, \T{R})) && \text{[by \T{P(R)} in I.H.]} \\
+&= \fless(b, \T{Tree($x$, \T{L}, \finsert($v$, R))}) && \text{[definition of \fless]}
+\end{align*}
+
+We see from our cases that if $v < x$ then $\fless(b, \T{T}) \land b > v \Rightarrow \fless(b, \T{Tree($x$, \finsert($v$, \T{L}), R)})$
+else $\fless(b, \T{T}) \land b > v \Rightarrow \fless(b, \T{Tree($x$, \T{L}, \finsert($v$, R))})$. 
+
+By the definition of \finsert, we can roll both implications into one and state that 
+$\fless(b, \T{T}) \land b > v \Rightarrow \fless(b, \finsert(v, \T{Tree($x$, L, R)}))$ which is equivalent
+to $\fless(b, \T{T}) \land b > v \Rightarrow \fless(b, \finsert(v, \T{T}))$
+
+Thus, by structual induction, we have shown that \T{P(T)} is true for all $\T{T} \in \T{Trees}$. \qed
+\end{part}
+\pagebreak
+\begin{part} \textbf{Prove that for all trees \T{T} and all $v \in \ZZ$, if \fisBST(\T{T}),
+    then \fisBST(\finsert($v$, \T{T})). }
+
+Let \T{P(T)} be the statement that for all $v \in \ZZ$, if \fisBST(\T{T}), then
+\fisBST(\finsert(v, \T{T})) i.e. for all $v \in \ZZ, \fisBST(\T{T}) \Rightarrow \fisBST(\finsert(v, \T{T}))$.
+
+We prove P(\T{T}) for all \T{T} $\in$ \T{Trees} by structural induction on \T{T}. 
+
+\underline{Base Case:} \T{T} = \Nil
+\begin{align*}
+\fisBST(\T{T}) &= \fisBST(\Nil) \\
+&= \T{true} && \text{[definition of \fisBST]} \\
+&\Rightarrow \T{true} \land \T{true} \land \T{true} \\
+&= \fless(v, \Nil) \land \fisBST(\Nil) \land \fgreater(v, \Nil) \land \fisBST(\Nil) && \text{[definition of \fless, \fisBST, and \fgreater]} \\
+&= \fisBST(\T{Tree}(v, \Nil, \Nil)) && \text{[definition of \fisBST]} \\
+&= \fisBST(\finsert(v, \Nil)) && \text{[definition of \finsert]} \\
+&= \fisBST(\finsert(v, \T{T}))
+\end{align*}
+Therefore, $\fisBST(\T{T}) \Rightarrow \fisBST(\finsert(v, \T{T}))$ for \T{T} = $\Nil$ and our base case holds.
+
+\underline{Induction Hypothesis:} For some \T{L, R} $\in$ \T{Trees}, suppose \T{P(L)} and \T{P(R)} are true.
+
+\underline{Induction Step:} We want to show \T{P(T)} is true for \T{T = Tree($x$, L, R)} for all $x \in \ZZ$. We start by looking at two cases: $v < x$ and $v \geq x$.
+
+\underline{Case: $v < x$}  
+\begin{align*}
+\fisBST(\T{T}) &= \fisBST(\T{Tree($x$, L, R)})\\
+&= \fless(x, \T{L}) \land \fisBST(\T{L}) \land \fgreater(x, \T{R}) \land \fisBST(\T{R}) && \text{[definition of \fisBST]} \\
+&\Rightarrow \fless(x, \T{L}) \land x > v \land \fisBST(\T{L}) \land \fgreater(x, \T{R}) \land \fisBST(\T{R}) && \text{[by our case]} \\
+&\Rightarrow \fless(x, \finsert(v, \T{L})) \land \fisBST(\T{L}) \land \fgreater(x, \T{R}) \land \fisBST(\T{R}) && \text{[by theorem proven in part a]} \\
+&\Rightarrow \fless(x, \finsert(v, \T{L})) \land \fisBST(\finsert(v, \T{L})) \land \fgreater(x, \T{R}) \land \fisBST(\T{R}) && \text{[by \T{P(L)} in I.H.]} \\
+&= \fisBST(\T{Tree($x$, \finsert($v$, \T{L}), R)}) && \text{[definition of \fisBST]}
+\end{align*}
+
+\underline{Case: $v \geq x$}  
+\begin{align*}
+\fisBST(\T{T}) &= \fisBST(\T{Tree($x$, L, R)})\\
+&= \fless(x, \T{L}) \land \fisBST(\T{L}) \land \fgreater(x, \T{R}) \land \fisBST(\T{R}) && \text{[definition of \fisBST]} \\
+&\Rightarrow \fless(x, \T{L}) \land \fisBST(\T{L}) \land \fgreater(x, \T{R}) \land v \geq x \land \fisBST(\T{R}) && \text{[by our case]} \\
+&\Rightarrow \fless(x, \T{L}) \land \fisBST(\T{L}) \land \fgreater(x, \finsert(v, \T{R})) \land \fisBST(\T{R}) && \text{[symmetric theorem for greater]} \\
+&\Rightarrow \fless(x, \T{L}) \land \fisBST(\T{L}) \land \fgreater(x, \finsert(v, \T{R})) \land \fisBST(\finsert(v, \T{R})) && \text{[by \T{P(R)} in I.H.]} \\
+&= \fisBST(\T{Tree($x$, \T{L}, \finsert($v$, R))}) && \text{[definition of \fisBST]}
+\end{align*}
+
+We see from our cases that if $v < x$ then $\fisBST(\T{T}) \Rightarrow \fisBST(\T{Tree($x$, \finsert($v$, \T{L}), R)})$
+else $\fisBST(\T{T}) \Rightarrow \fisBST(\T{Tree($x$, \T{L}, \finsert($v$, R))})$. 
+
+By the definition of \finsert, we can roll both implications into one and state that 
+$\fisBST(\T{T}) \Rightarrow \fisBST(\finsert(v, \T{Tree($x$, L, R)}))$ which is equivalent
+to $\fisBST(\T{T}) \Rightarrow \fisBST(\finsert(v, \T{T}))$
+
+Thus, by structual induction, we have shown that \T{P(T)} is true for all $\T{T} \in \T{Trees}$. \qed
+\end{part}
+\end{question}
+
+
+\end{document}
