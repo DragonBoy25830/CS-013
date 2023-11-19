@@ -1,0 +1,92 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Welcome to Overleaf --- just edit your LaTeX on the left,
+% and we'll compile it for you on the right. If you open the
+% 'Share' menu, you can invite other users to edit at the same
+% time. See www.overleaf.com/learn for more info. Enjoy!
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt, nopagenumbers]{adamblan-hw}
+
+% Some frequently helpful commands. Feel free to add more of your own.
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\RR}{\mathbb{R}}
+
+\newcommand{\limit}{\lim\limits}
+\newcommand{\limn}{\limit_{n \to \infty}}
+
+% usage \set{1, 2, 3} for {1, 2, 3}. Will automatically resize the braces too.
+\newcommand{\set}[1]{\left\{ #1 \right\}}
+% usage \abs{\frac{1}{2}} for |1/2|. Will automatically resize the bars too.
+\newcommand{\abs}[1]{\left| #1 \right|}
+% same as \abs but with double bars like for vector magnitude
+\newcommand{\norm}[1]{\left\| #1 \right\|}
+% usage \ceil{\frac{1}{2}} for \lceil 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+% usage \floor{\frac{1}{2}} for \lfloor 1/2 \rfloor. Will automatically resize the bars too.
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+% usage \round{\frac{1}{2}} for \lfloor 1/2 \rceil. Will automatically resize the bars too.
+\newcommand{\round}[1]{\left\lfloor #1 \right\rceil}
+% The following commands are defined via the xparse package, which you can look up for more info if you want.
+
+% \par(\frac{1}{2}) will automatically resize the parenthesis
+\NewDocumentCommand{\paren}{r()}{\ensuremath{\left( #1 \right)}}
+% \brac[\frac{1}{2}] will automatically resize the brackets
+\NewDocumentCommand{\brac}{r[]}{\ensuremath{\left[ #1 \right]}}
+
+%%%%%%%%%%%%%%%%% Identifying Information %%%%%%%%%%%%%%%%%
+%% DO NOT INCLUDE YOUR NAME ANYWHERE IN THE PDF. WE WANT %%
+%% TO GRADE ANONYMOUSLY TO AVOID BIAS!!!!                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\begin{question}{Bipartite Coloring!}
+\textbf{Prove that a graph is bipartite if and only if it is 2-colorable.}
+
+Since this is an if and only if statement, we need to prove the implication in both directions:
+
+\underline{Proof ($\Rightarrow$)}:
+We start with a graph $G = (V, E)$ being bipartite. By the definition of bipartite, we can say
+that $V$ can be partitioned into two disjoint sets $A$ and $B$ such that every edge connects
+to a vertex in $A$ to a vertex in $B$.
+
+Let a coloring function $c$ be defined as $c: V \rightarrow \{1, 2\}$ where every vertex in $A$
+is colored $1$ and every vertex in $B$ is colored $2$. 
+
+For every $(u, v) \in E$, by the definition of bipartite, 
+$(u, v) \in E \Rightarrow u \in A \land v \in B$. By the construction of our coloring function,
+$c(u) = 1 \neq 2 = c(v)$. Since this is true for every $(u, v) \in E$, there is
+no $(u, v) \in E$ with $c(u) = c(v)$. Therefore, $G$ is two-colorable by the definition of n-colorable where n=$2$. \\
+
+\underline{Proof ($\Leftarrow$)}:
+We start with a graph $G = (V, E)$ being 2-colorable. By the definition of n-colorable where n=$2$,
+there is no $(u, v) \in E$ with $c(u) = c(v)$ where $c$ is a coloring function defined as
+$c: V \rightarrow \{1, 2\}$. 
+
+Let $A = \{v|v \in V, c(v) = 1\}$ and $B = \{v|v \in V, c(v) = 2\}$. We will prove that $A$ and $B$ are disjoint. 
+
+\begin{proof} 
+We perform this proof by contradiction. Suppose that $A$ and $B$ are not disjoint. By definition of disjoint sets,
+$A \cap B \neq \emptyset$ i.e. there is an element $v$ where $v \in A$ and $v \in B$. Since 
+$v \in A$, $c(v) = 1$ by the construction of $A$. Similarly, since $v \in B$, $c(v) = 2$. This
+gives us that $c(v) = 1 = 2 = c(v)$ which is clearly false, so our initial assumption was wrong. 
+Therefore, $A$ and $B$ are disjoint sets.
+\end{proof}
+
+By the definition of n-colorable, $\forall (u, v) \in E, c(u) \neq c(v)$. For every pair of vertices
+$v_1, v_2 \in A$, by the construction of $A$, $c(v_1) = c(v_2)$. By the definition
+of n-colorable, $(v_1, v_2) \notin E$. A similar argument can be made for every pair of vertices in $B$. Since
+there are no edges within the vertices in $A$ or $B$, all the edges must be connecting a vertex
+in $A$ to a vertex in $B$.
+
+Thus, since we were able to partition $V$ into two disjoint sets $A$ and $B$ where every edge
+connects a vertex in $A$ to a vertex in $B$, $G$ is bipartite. 
+
+Thus, since we have proven the implication in both directions, we have proven our original
+claim. \qed
+\end{question}
+
+\end{document}
